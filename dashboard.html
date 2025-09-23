@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="dash.css">
+</head>
+<body>
+
+    <header class="topbar">
+  <div class="logo">MARTIN'S HUB</div>
+  <div class="burger">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+</header>
+
+<aside class="sidebar">
+  <nav class="menu">
+    <a href="#" class="active">Dashboard</a>
+    <a href="#">Projects</a>
+    <a href="#">Clients</a>
+    <a href="#">Messages</a>
+    <a href="#">Settings</a>
+    <button id="logoutBtn">Logout</button>
+  </nav>
+</aside>
+
+   <div class="overlay"></div>
+
+
+  <!-- Main Content -->
+  <main class="main">
+    <div class="welcome-banner">
+      <h2>Welcome back, <span id="username"></span> 👋</h2>
+      <p>Here’s an overview of your activity today.</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <h3>5</h3>
+        <p>Active Projects</p>
+      </div>
+      <div class="stat-card">
+        <h3>12</h3>
+        <p>Clients</p>
+      </div>
+      <div class="stat-card">
+        <h3>3</h3>
+        <p>Pending Tasks</p>
+      </div>
+      <div class="stat-card">
+        <h3>98%</h3>
+        <p>Uptime</p>
+      </div>
+    </div>
+
+    <!-- Recent Activity -->
+    <div class="activity">
+      <h3>Recent Activity</h3>
+      <ul>
+        <li>✅ Completed project "Landing Page Redesign"</li>
+        <li>📩 Received message from Client A</li>
+        <li>🚀 Started new project "E-commerce Website"</li>
+        <li>⚙️ Updated server settings</li>
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="cta">
+      <button>Create New Project</button>
+    </div>
+  </main>
+
+  
+  <script>
+    
+    document.querySelectorAll(".stat-card h3").forEach(stat => {
+      let target = +stat.textContent;
+      stat.textContent = "0";
+      let count = 0;
+      let interval = setInterval(() => {
+        count++;
+        stat.textContent = count;
+        if (count >= target) clearInterval(interval);
+      }, 100);
+    });
+
+    const burger = document.querySelector('.burger');
+    const sidebar = document.querySelector('.sidebar');
+    const overlay = document.querySelector('.overlay');
+
+    burger.addEventListener('click', () =>{
+        sidebar.classList.toggle('show');
+        overlay.classList.toggle('show');
+    });
+
+    overlay.addEventListener('click', () => {
+        sidebar.classList.remove('show');
+        overlay.classList.remove('show');
+    });
+
+    
+  // Get logged in user
+  const currentUser = JSON.parse(localStorage.getItem("currentUser"))
+                   || JSON.parse(sessionStorage.getItem("currentUser"));
+
+  // If no user, redirect back to login
+  if (!currentUser) {
+//     window.location.href = "login.html";
+//   } else {
+    // ✅ Update username in the dashboard
+    document.getElementById("username").textContent = currentUser.username;
+  }
+
+  // ✅ Logout function
+  document.getElementById("logoutBtn").addEventListener("click", () => {
+    localStorage.removeItem("currentUser");
+    sessionStorage.removeItem("currentUser");
+    window.location.href = "login.html";
+  });
+
+
+
+
+    
+  
+
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome Here</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <header>
+        <h2 class="logo">MARTIN'S HUB</h2>
+         <nav class="navigation">
+         <a href="./index.html#Home">Home</a>
+        <a href="./learnmore.html#About">About</a>
+        <a href="#services">Services</a>
+        <a href="./index.html#Contact">Contact</a>
+        <button class="btnlogin-popup">Login / SignUp</button>    
+        </nav>
+        <div class="burger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </header>
+
+    
+      <section class="intro">
+         <div class="container">
+              <h2>Why Get Started with Martin's Hub?</h2>
+               <p>
+                <strong>Martin's Hub </strong>is built to connect people, ideas, and opportunities in one place.  
+                 By creating an account, you unlock access to exclusive features that help  
+                 you learn, grow, and stay connected.  
+               </p>
+               <p>
+                 Whether you’re new to the platform or already part of our community,  
+                 getting started takes just a few clicks.  
+                 SignUp now  to begin your journey.
+              </p>
+              <p>
+                 With <strong>Martin's Hub</strong>, you’re not just registering — you’re joining a network where
+                 collaboration, creativity, and growth meet. Let’s build something
+                 meaningful together.
+             </p>
+           </div>
+           
+           <div class="services" id="services">
+               <h2>Our Services Here!!! </h2>
+                <p>Here at <strong>MARTIN'S HUB</strong> we have competent and professional workers who are well trained,
+                Building modern digital experiences that help your business or innovation project for the growth of your business or company. 
+                </p>
+
+              <div class="service-grid">
+                 <!-- Web Development -->
+                 <div class="service-card">
+                  <img src="./images/web dev.jpg" alt="Web Development">
+                  <h3>Web Development</h3>
+                   <p>We build secure, scalable, and high-performance websites tailored to your business needs,
+                     using the latest technologies.</p>
+             </div>
+
+               <!-- Web Design -->
+              <div class="service-card">
+                 <img src="./images/web desgin.jpg" alt="Image">
+                 <h3>Web Design</h3>
+                 <p>Our creative team designs modern, user-friendly, 
+                    and responsive layouts that capture attention and keep users engaged.</p>
+              </div>
+
+                  <!-- Landing Pages -->
+              <div class="service-card">
+                  <img src="./images/landing page.jpg" alt="Image">
+                  <h3>Landing Pages</h3>
+                  <p>We create high-converting landing pages optimized for speed, performance, 
+                    and driving customer action.</p>
+               </div>
+
+                    <!-- SEO & Optimization -->
+               <div class="service-card">
+                 <img src="./images/seo, optimzation.jpg" alt="Image">
+                 <h3>SEO & Optimization</h3>
+                 <p>Boost your online visibility with SEO-friendly websites that rank higher and load faster.</p>
+               </div>
+          </div>
+      </section>
+
+
+
+    
+
+    <div class="wrapper">
+        <span class="icon-close">x</span>
+
+        <div class="form-box login">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="input-box">
+                    <span class="icon">📧</span>
+                    <input type="email" id="login-username" required>
+                    <label >Email</label>
+                    
+                </div>
+                <div class="input-box">
+                    <span class="icon">🔒</span>
+                    <input type="password" id="login-password" required>
+                    <label>Password</label>
+                    
+                </div>
+                <div class="remeber-forgot">
+                    <label><input type="checkbox" id="remeberMe">
+                        Remember me</label>
+                        <a href="#">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="login-register">
+                    <p>Don't have an account? 
+                    <a href="#" class="register-link">Register</a></p>
+                </div>
+            </form>
+        </div>
+        
+
+         <div class="form-box register">
+            <h2>Registration</h2>
+            <form id="registerForm">
+                <div class="input-box">
+                    <span class="icon">👤</span>
+                    <input type="text" id="register-username" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon">📧</span>
+                    <input type="email" id="register-email" required>
+                    <label >Email</label>
+                </div>
+                <div class="input-box">
+                    <span class="icon">🔒</span>
+                    <input type="password" id="register-password" required>
+                    <label>Password</label>
+                </div>
+                <div class="remeber-forgot">
+                    <label><input type="checkbox" required>
+                    I agree to the terms & conditions</label>
+                        
+                </div>
+                <button type="submit" class="btn">Register</button>
+                <div class="login-register">
+                    <p>Already have an account? <a href="#" class="login-link">Login</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+
+    <div id="welcomeBox" style="display:none; text-align:center; color:white; margin-top:50px;">
+    <!-- JS will fill this -->
+    </div>
+
+   <div id="adminPanel" style="display:none; text-align:center; color:white; margin-top:30px;">
+  <h2>👥 Registered Users</h2>
+  <button id="showUsersBtn" style="padding:10px 20px; background:#06b6d4; color:#fff; border:none; border-radius:6px; cursor:pointer;">
+    Show All Users
+  </button>
+  <div id="usersList" style="margin-top:20px;"></div>
+  </div>
+
+  <div id="preloader">
+  <div class="spinner"></div>
+</div>
+
+ <div class="overlay"></div>
+
+   <!-- Back to Top Button -->
+<button id="backToTop" class="back-to-top">⬆</button>
+
+
+
+
+    
+
+
+
+    <script src="./script/login.js"></script>
+</body>
+</html>
