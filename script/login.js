@@ -104,7 +104,7 @@ loginForm.addEventListener("submit", (e) => {
 
   const email = loginForm.querySelector("#login-username").value.trim();
   const password = loginForm.querySelector("#login-password").value;
-  const remeberMe = document.getElementById("remeberMe").checked;
+  const rememberMe = document.getElementById("rememberMe").checked;
 
   const foundUser = users.find((u) => u.email === email && u.password === password);
    
@@ -219,5 +219,6 @@ backToTop.addEventListener("click", () => {
     behavior: "smooth"
   });
 });
+
 
 
