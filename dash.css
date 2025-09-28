@@ -63,7 +63,39 @@ body {
      padding:20px 0;
      transition: 0.3s ease;
      z-index:999;
+     gap:2rem;
  }
+
+.sidebar button {
+  margin-top: 20px;
+  background: var(--secondary);
+  border: none;
+  color: var(--text);
+  padding: 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.sidebar button:hover {
+  background: var(--accent); /* You can also make a --danger variable */
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  height: calc(100% - 60px);
+  background: rgba(0, 0, 0, 0.4);
+  display: none;
+  z-index: 500;
+}
+
+.overlay.show {
+  display: block;
+}
 
  
 
@@ -215,7 +247,87 @@ body {
       background: var(--secondary);
     }
 
+    #logoutBtn {
+  background: #ec4899;      
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
 
+#logoutBtn:hover {
+  background: #41031e;     
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(236, 72, 153, 0.4);
+}
+
+#logoutBtn:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+  
+
+
+/* Mobile view (up to 768px) */
+@media (max-width: 768px) {
+  /* Body stays column-like */
+  body {
+    flex-direction: column;
+  }
+
+  /* Sidebar hidden off-canvas */
+  .sidebar {
+    left: -260px; /* stays hidden until burger click */
+    width: 220px;
+    background: var(--dark-light);
+    padding-top: 1rem;
+  }
+
+  /* Sidebar when active */
+  .sidebar.show {
+    left: 0;
+  }
+
+  /* Overlay appears */
+  .overlay.show {
+    display: block;
+  }
+
+  /* Burger menu is visible */
+  .burger {
+    display: flex;
+  }
+
+  /* Main content without sidebar margin */
+  .main {
+    margin-left: 0;
+  }
+}
+
+/* Tablet/Desktop (≥768px) */
+@media (min-width: 768px) {
+  .burger {
+    display: none; /* burger hidden */
+  }
+
+  .sidebar {
+    left: 0; /* sidebar always visible */
+  }
+
+  .overlay {
+    display: none !important;
+  }
+
+  .main {
+    margin-left: 240px; /* push main content right */
+  }
+}
 
 
 
