@@ -91,7 +91,7 @@ header {
     width: 100%;
     background: rgba(15,23,42,0.9);
     backdrop-filter: blur(10px);
-    border-bottom: 1px soild var(--glass-border);
+    border-bottom: 1px solid var(--glass-border);
     z-index: 1000;
     transition: all 0.3s ease;
     padding: 0.2 rem;
@@ -194,14 +194,14 @@ nav{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: fadeInUp 2s ease-out;
+    animation: fadeDown 2s ease-out;
 }
 
 .hero p{
     font-size: 1.2rem;
     color: var(--text-muted);
     margin-bottom: 2rem;
-    animation: fadeInUp 2s ease-out;
+    animation: fadeUp 2s ease-out;
 
 }
 
@@ -211,6 +211,7 @@ nav{
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    animation: fadeIn 2s ease-out;
 }
 
 .btn{
@@ -326,14 +327,38 @@ nav{
         opacity: 0; transform: translateY(15rem);
     }
     to{
-        opacity: 3; transform: translateY(0);
+        opacity: 1; transform: translateY(0);
     }
 }
 
-.feature:nth-child(1){animation-delay: 0s;}
-.feature:nth-child(2){animation-delay: 0.2s;}
-.feature:nth-child(3){animation-delay: 0.4s;}
-.feature:nth-child(4){animation-delay: 0.6s;}
+@keyframes fadeDown {
+  from {opacity: 0; transform: translateY(-40px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+@keyframes fadeUp {
+  from {opacity: 0; transform: translateY(40px);}
+  to {opacity: 1; transform: translateY(0);}
+}
+
+
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease-out;
+}
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+
+
+.feature:nth-child(1){transition-delay: 0.2s;}
+.feature:nth-child(2){transition-delay: 0.4s;}
+.feature:nth-child(3){transition-delay: 0.6s;}
+.feature:nth-child(4){transition-delay: 0.8s;}
 
 .About{
      background: var(--glass);
@@ -474,7 +499,7 @@ nav{
 
 
 
-
+ 
 
 
 

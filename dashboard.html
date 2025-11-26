@@ -1,137 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="dash.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Dashboard - Martin’s Hub</title>
+  <link rel="stylesheet" href="dash.css">
 </head>
 <body>
 
-    <header class="topbar">
-  <div class="logo">MARTIN'S HUB</div>
-  <div class="burger">
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-</header>
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="logo">MARTIN'S HUB</div>
+    <div class="burger"><span></span><span></span><span></span></div>
+  </header>
 
-<aside class="sidebar">
-  <nav class="menu">
-    <a href="#" class="active">Dashboard</a>
-    <a href="#">Projects</a>
-    <a href="#">Clients</a>
-    <a href="#">Messages</a>
-    <a href="#">Settings</a>
-    <button id="logoutBtn">Logout</button>
-  </nav>
-</aside>
-
-   <div class="overlay"></div>
-
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <nav class="menu">
+      <a href="#" class="active">Dashboard</a>
+      <a href="#">My Orders</a>
+      <a href="#">Messages</a>
+      <a href="#">Profile</a>
+      <button id="logoutBtn">Logout</button>
+    </nav>
+  </aside>
+  <div class="overlay"></div>
 
   <!-- Main Content -->
   <main class="main">
+
+    <!-- Welcome -->
     <div class="welcome-banner">
       <h2>Welcome back, <span id="username"></span> 👋</h2>
-      <p>Here’s an overview of your activity today.</p>
+      <p>Here’s your service dashboard.</p>
     </div>
 
-    <!-- Stats -->
-    <div class="stats-grid">
-      <div class="stat-card">
-        <h3>5</h3>
-        <p>Active Projects</p>
-      </div>
-      <div class="stat-card">
-        <h3>12</h3>
-        <p>Clients</p>
-      </div>
-      <div class="stat-card">
-        <h3>3</h3>
-        <p>Pending Tasks</p>
-      </div>
-      <div class="stat-card">
-        <h3>98%</h3>
-        <p>Uptime</p>
-      </div>
-    </div>
+    <!-- Orders Section -->
+    <section class="orders">
+      <h3>My Orders</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Service</th>
+            <th>Status</th>
+            <th>Review</th>
+          </tr>
+        </thead>
+        <tbody id="orderList">
+          <tr><td colspan="3">No orders yet...</td></tr>
+        </tbody>
+      </table>
+      <button id="newOrderBtn">+ New Order</button>
+    </section>
 
-    <!-- Recent Activity -->
-    <div class="activity">
-      <h3>Recent Activity</h3>
-      <ul>
-        <li>✅ Completed project "Landing Page Redesign"</li>
-        <li>📩 Received message from Client A</li>
-        <li>🚀 Started new project "E-commerce Website"</li>
-        <li>⚙️ Updated server settings</li>
-      </ul>
-    </div>
-
-    <!-- CTA -->
-    <div class="cta">
-      <button>Create New Project</button>
-    </div>
   </main>
 
-  
+  <!-- Modal for New Orders -->
+  <div id="newOrderModal" class="modal">
+    <div class="modal-content">
+      <h3>Create New Order</h3>
+      <form id="orderForm">
+        <label>Choose Service:</label>
+        <select id="serviceSelect" name="service">
+          <option value="Website Development">Website Development</option>
+          <option value="Web Design">Web Design</option>
+          <option value="SEO Optimization">SEO Optimization</option>
+          <option value="Branding Package">Branding Package</option>
+        </select>
+
+        <label>Details:</label>
+        <textarea id="serviceDetails" name="details" placeholder="Describe what you need..." required></textarea>
+
+        <button type="submit">Submit Order</button>
+        <button type="button" onclick="closeModal()">Cancel</button>
+      </form>
+    </div>
+  </div>
+
   <script>
-    
-    document.querySelectorAll(".stat-card h3").forEach(stat => {
-      let target = +stat.textContent;
-      stat.textContent = "0";
-      let count = 0;
-      let interval = setInterval(() => {
-        count++;
-        stat.textContent = count;
-        if (count >= target) clearInterval(interval);
-      }, 100);
+  const newOrderBtn = document.getElementById("newOrderBtn");
+  const modal = document.getElementById("newOrderModal");
+  const orderForm = document.getElementById("orderForm");
+  const orderList = document.getElementById("orderList");
+
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const currentUser = JSON.parse(localStorage.getItem("currentUser")) || null;
+  
+
+  document.getElementById("username").textContent = username;
+
+  // --- Show existing orders ---
+  function renderOrders() {
+    orderList.innerHTML = "";
+    if (orders.length === 0) {
+      orderList.innerHTML = `<tr><td colspan="3">No orders yet...</td></tr>`;
+      return;
+    }
+    orders.forEach((o, i) => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td>${o.service}</td>
+        <td><span class="status ${o.status.toLowerCase()}">${o.status}</span></td>
+        <td>${o.status === "Completed" ? `<button onclick="addReview('${o.service}')">Review</button>` : "—"}</td>
+      `;
+      orderList.appendChild(row);
     });
-
-    const burger = document.querySelector('.burger');
-    const sidebar = document.querySelector('.sidebar');
-    const overlay = document.querySelector('.overlay');
-
-    burger.addEventListener('click', () =>{
-        sidebar.classList.toggle('show');
-        overlay.classList.toggle('show');
-    });
-
-    overlay.addEventListener('click', () => {
-        sidebar.classList.remove('show');
-        overlay.classList.remove('show');
-    });
-
-    
-  // Get logged in user
-  const currentUser = JSON.parse(localStorage.getItem("currentUser"))
-                   || JSON.parse(sessionStorage.getItem("currentUser"));
-
-  // If no user, redirect back to login
-  if (!currentUser) {
-    window.location.href = "login.html";
-    } else {
-    // ✅ Update username in the dashboard
-    document.getElementById("username").textContent = currentUser.username;
   }
+  renderOrders();
 
-  // ✅ Logout function
+  // --- Open / Close Modal ---
+  newOrderBtn.onclick = () => (modal.style.display = "block" );
+  function closeModal() { modal.style.display = "none"; }
+
+  // --- Submit Order ---
+  orderForm.onsubmit = function (e) {
+    e.preventDefault();
+    const service = document.getElementById("serviceSelect").value;
+    const details = document.getElementById("serviceDetails").value;
+
+    const newOrder = {
+      user: username,
+      service: service,
+      details: details,
+      status: "Pending"
+    };
+
+    orders.push(newOrder);
+    localStorage.setItem("orders", JSON.stringify(orders));
+    renderOrders();
+
+    // Send to WhatsApp
+    const phone = "2347012239295"; // your WhatsApp number
+    const text = `Hello, I (${username}) want to order: ${service}. Details: ${details}`;
+    window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, "_blank");
+
+    closeModal();
+    orderForm.reset();
+  };
+
+  // --- Add Review after Completion ---
+  function addReview(service) {
+    const reviewText = prompt("Write your review for " + service);
+    if (reviewText) {
+      let pendingReviews = JSON.parse(localStorage.getItem("pendingReviews")) || [];
+      pendingReviews.push({ user: username, service, review: reviewText });
+      localStorage.setItem("pendingReviews", JSON.stringify(pendingReviews));
+      alert("✅ Your review has been submitted and is pending admin approval.");
+    }
+  };
+
+  // --- Logout ---
   document.getElementById("logoutBtn").addEventListener("click", () => {
     localStorage.removeItem("currentUser");
-    sessionStorage.removeItem("currentUser");
-    window.location.href = "login.html";
+    window.location.href = "index.html";
   });
 
+  const burger = document.querySelector('.burger');
+  const sideBar = document.querySelector('.sidebar');
 
-
-
-    
-  
-
-
-
+  burger.addEventListener('click', () =>{
+    sideBar.classList.toggle('show');
+  });
   </script>
 </body>
-
 </html>

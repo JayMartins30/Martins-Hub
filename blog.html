@@ -3,9 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Our Blog</title>
+    <link rel="stylesheet" href="blog.css">
 </head>
 <body>
     
+    <!-- Blog Post 1 -->
+<article class="blog-post">
+  <h1>Welcome to Martin’s Hub Blog 🚀</h1>
+  <p>At <strong>Martin’s Hub</strong>, we believe every business deserves a strong digital presence. That’s why we’ve created this space — not just to showcase our services, but to share ideas, tips, and insights that can help you grow online.</p>
+
+  <h2>What You’ll Find Here</h2>
+  <ul>
+    <li><strong>Project Highlights</strong> – case studies of how we build websites and solve problems.</li>
+    <li><strong>Practical Tips</strong> – easy steps to improve your website’s design, speed, and security.</li>
+    <li><strong>Tech Insights</strong> – the latest trends in web development and digital tools.</li>
+    <li><strong>Behind the Scenes</strong> – a closer look at how we work and what inspires us.</li>
+  </ul>
+
+  <h2>Why We’re Doing This</h2>
+  <p>We’ve seen many people struggle with outdated websites, low conversions, or unclear branding. Through this blog, we want to show that with the right strategy and execution, anyone can thrive online.</p>
+
+  <h2>Stay Connected</h2>
+  <p>This is just the beginning! Subscribe, bookmark, or check back regularly — we’ll be posting updates, guides, and stories you won’t want to miss.</p>
+
+  <p>Thanks for stopping by, and welcome once again to <strong>Martin’s Hub Blog</strong>. Together, let’s build something amazing! 💡</p>
+</article>
+
+
+<!-- Blog Post 2 -->
+<article class="blog-post">
+  <h1>5 Reasons Your Business Needs a Website in 2025 🌍</h1>
+  <p>If you’re running a business in 2025 and still don’t have a website, you’re missing out on one of the most powerful tools for growth. At <strong>Martin’s Hub</strong>, we’ve seen firsthand how a well-built site can transform businesses. Here are five reasons why having a website is no longer optional:</p>
+
+  <h2>1. 24/7 Online Presence</h2>
+  <p>Your website never sleeps. Customers can learn about your products or services anytime — even when you’re off the clock.</p>
+
+  <h2>2. Builds Trust and Credibility</h2>
+  <p>A professional website shows that you’re serious about your business. First impressions matter, and most people will Google you before reaching out.</p>
+
+  <h2>3. Attracts New Customers</h2>
+  <p>With the right SEO (search engine optimization), your site can bring in new visitors daily without extra marketing costs.</p>
+
+  <h2>4. Showcases Your Services</h2>
+  <p>Instead of explaining what you do over and over, let your website do it for you. With images, testimonials, and case studies, it becomes your best salesperson.</p>
+
+  <h2>5. Gives You a Competitive Edge</h2>
+  <p>Many businesses are still offline or stuck with outdated sites. Having a modern, fast, and mobile-friendly website immediately puts you ahead of the competition.</p>
+
+  <h3>💡 Final Thought:</h3>
+  <p>The internet isn’t slowing down — and neither should your business. If you’ve been delaying building or upgrading your website, now is the perfect time. At <strong>Martin’s Hub</strong>, we’re here to help you make that leap.</p>
+
+  <p class="em"><em>Ready to get started? Let’s build something amazing together. 🚀</em></p>
+</article>
+     <div class="cta">
+        <button>
+            <a href="./login.html">
+            Get Started with Us</a></button>
+      </div>
+      
+      <section class="reviews">
+    <h2>💬 Client Reviews</h2>
+    <div id="reviewList">
+      <p>No reviews yet. Be the first to leave one after your project!</p>
+    </div>
+  </section>
+
+      <button id="backToTop" class="back-to-top">⬆</button>
+
+      <script>
+  const posts = document.querySelectorAll('.blog-post');
+  const backToTop = document.getElementById('backToTop');
+
+
+   posts.forEach((post, index) => {
+      if (index % 3 === 0) {
+        post.classList.add('left');
+      } else if (index % 3 === 1) {
+        post.classList.add('right');
+      } else {
+        post.classList.add('bottom');
+      }
+    });
+
+     // --- Load Approved Reviews from localStorage ---
+    function loadReviews() {
+      const reviewList = document.getElementById("reviewList");
+      let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+
+      if (reviews.length === 0) {
+        reviewList.innerHTML = "<p>No reviews yet...</p>";
+        return;
+      }
+
+      reviewList.innerHTML = "";
+      reviews.forEach(r => {
+        const div = document.createElement("div");
+        div.classList.add("review-card");
+        div.innerHTML = `
+          <h3>${r.user} on <em>${r.service}</em></h3>
+          <p>"${r.review}"</p>
+          <hr>
+        `;
+        reviewList.appendChild(div);
+      });
+    }
+
+    loadReviews();
+
+
+
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('show');
+      }
+    });
+  }, { threshold: 0.3 });
+
+  posts.forEach(post => observer.observe(post));
+
+   window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) {
+    backToTop.style.display = "flex";
+  } else {
+    backToTop.style.display = "none";
+  }
+});
+
+// Smooth scroll back to top
+backToTop.addEventListener("click", () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+});
+
+
+</script>
+
 </body>
 </html>

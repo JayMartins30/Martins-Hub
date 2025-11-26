@@ -559,7 +559,12 @@ header{
   transform: scale(1.1);
 }
 
-
+.work{
+  background: var(--dark);
+  margin: 3rem auto 3rem;
+  border-radius: 2rem;
+  margin-top: 4rem;
+}
 
 
 

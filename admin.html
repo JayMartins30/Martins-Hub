@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard - Martin’s Hub</title>
+  <link rel="stylesheet" href="dash.css">
+  <style>
+    .section {
+      margin: 2rem 0;
+      padding: 1.5rem;
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      backdrop-filter: blur(8px);
+    }
+    .section h2 { margin-bottom: 1rem; color: var(--accent, #06b6d4); }
+    table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+    th, td { padding: 0.8rem; border-bottom: 1px solid #444; }
+    .status-btn { padding: 4px 8px; border: none; cursor: pointer; margin: 0 2px; border-radius: 5px; }
+    .approve { background: green; color: white; }
+    .reject { background: red; color: white; }
+    .update { background: #6366f1; color: white; }
+  </style>
+</head>
+<body>
+
+  <!-- Topbar -->
+  <header class="topbar">
+    <div class="logo">ADMIN - MARTIN'S HUB</div>
+     <div class="burger">
+      <span></span>
+      <span></span>
+      <span></span>
+     </div>
+  </header>
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <nav class="menu">
+      <a href="#" class="active">Dashboard</a>
+      <a href="#">Orders</a>
+      <a href="#">Reviews</a>
+      <a href="#">Settings</a>
+      <button id="logoutBtn">Logout</button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="main">
+
+    <!-- Orders Section -->
+    <section class="section">
+      <h2>📦 Client Orders</h2>
+      <table id="adminOrders">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Service</th>
+            <th>Status</th>
+            <th>Update</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="4">No orders yet...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="section">
+      <h2>💬 Pending Reviews</h2>
+      <table id="pendingReviewsTable">
+        <thead>
+          <tr>
+            <th>Client</th>
+            <th>Service</th>
+            <th>Review</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td colspan="4">No pending reviews...</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+  </main>
+
+  <script>
+    // --- Load Orders ---
+    let orders = JSON.parse(localStorage.getItem("orders")) || [];
+    const ordersTable = document.querySelector("#adminOrders tbody");
+
+    function renderOrders() {
+      ordersTable.innerHTML = "";
+      if (orders.length === 0) {
+        ordersTable.innerHTML = `<tr><td colspan="4">No orders yet...</td></tr>`;
+        return;
+      }
+      orders.forEach((o, i) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${o.user}</td>
+          <td>${o.service}</td>
+          <td><span>${o.status}</span></td>
+          <td>
+            <button class="status-btn update" onclick="updateStatus(${i}, 'In Progress')">In Progress</button>
+            <button class="status-btn update" onclick="updateStatus(${i}, 'Completed')">Completed</button>
+          </td>
+        `;
+        ordersTable.appendChild(row);
+      });
+    }
+
+    function updateStatus(index, newStatus) {
+      orders[index].status = newStatus;
+      localStorage.setItem("orders", JSON.stringify(orders));
+      renderOrders();
+    }
+
+    // --- Pending Reviews ---
+    let pendingReviews = JSON.parse(localStorage.getItem("pendingReviews")) || [];
+    let approvedReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    const reviewsTable = document.querySelector("#pendingReviewsTable tbody");
+
+    function renderReviews() {
+      reviewsTable.innerHTML = "";
+      if (pendingReviews.length === 0) {
+        reviewsTable.innerHTML = `<tr><td colspan="4">No pending reviews...</td></tr>`;
+        return;
+      }
+      pendingReviews.forEach((r, i) => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${r.user}</td>
+          <td>${r.service}</td>
+          <td>${r.review}</td>
+          <td>
+            <button class="status-btn approve" onclick="approveReview(${i})">Approve</button>
+            <button class="status-btn reject" onclick="rejectReview(${i})">Reject</button>
+          </td>
+        `;
+        reviewsTable.appendChild(row);
+      });
+    }
+
+    function approveReview(index) {
+      approvedReviews.push(pendingReviews[index]);
+      pendingReviews.splice(index, 1);
+      localStorage.setItem("reviews", JSON.stringify(approvedReviews));
+      localStorage.setItem("pendingReviews", JSON.stringify(pendingReviews));
+      renderReviews();
+    }
+
+    function rejectReview(index) {
+      pendingReviews.splice(index, 1);
+      localStorage.setItem("pendingReviews", JSON.stringify(pendingReviews));
+      renderReviews();
+    }
+
+    // --- Init ---
+    renderOrders();
+    renderReviews();
+
+    document.getElementById("logoutBtn").addEventListener("click", () => {
+  localStorage.removeItem("currentAdmin");
+  window.location.href = "index.html";
+});
+
+
+  const burger = document.querySelector('.burger');
+  const sideBar = document.querySelector('.sidebar');
+
+  burger.addEventListener('click', () =>{
+    sideBar.classList.toggle('show');
+  });
+
+  </script>
+  
+</body>
+</html>

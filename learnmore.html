@@ -67,13 +67,43 @@
 
     <!-- Services -->
     <section class="services">
+      <div class="display">
       <h2>What We Offer</h2>
       <ul>
         <li>⚡ High-performance web and mobile applications</li><br>
         <li>🔒 Enterprise-grade security integration</li><br>
-        <li>☁️ Cloud migration and data backup solutions</li><br>
+        <li>☁️ Create wireframes & design systems</li><br>
         <li>🤝 Dedicated customer support available 24/7</li><br>
       </ul>
+      </div>
+        
+        <div class="display">    
+      <h2>Our Services Include:</h2>
+       <ul>
+         <li>Custom website design tailored to your brand</li><br>
+         <li>Responsive and mobile-friendly layouts</li><br>
+         <li>SEO optimization for higher search rankings</li><br>
+         <li>Integration with social media and analytics tools</li><br>
+         <li>E-commerce website development</li><br>
+       </ul>
+        </div>
+               
+
+      <div class="display">
+      <h2>Our Process</h2>
+        <ul>
+          <li>Initial consultation to understand your business goals</li><br>
+          <li>Design mockups and feedback</li><br>
+          <li>Development of a fully responsive, fast website</li><br>
+          <li>Testing, SEO optimization, and launch</li><br>
+          <li>Client review and approval</li><br>
+       </ul>
+      </div>
+
+      <button class="prev">&#10094;</button>
+      <button class="next">&#10095;</button>
+
+      <div class="dots"></div>
     </section>
 
     <!-- Call to Action -->
@@ -91,6 +121,81 @@
   </footer>
 
   <button id="backToTop">↑</button>
+
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+  const displays = document.querySelectorAll(".display");
+  const prevBtn = document.querySelector(".prev");
+  const nextBtn = document.querySelector(".next");
+  const dotsContainer = document.querySelector(".dots");
+  let dots = [];
+  let current = 0;
+  let slideInterval;
+
+  // Create dots dynamically based on number of slides
+  displays.forEach((_, i) => {
+    const dot = document.createElement("span");
+    dot.classList.add("dot");
+    dot.addEventListener("click", () => {
+      showSlide(i);
+      resetInterval();
+    });
+    dotsContainer.appendChild(dot);
+    dots.push(dot);
+  });
+
+  // Show slide function
+  function showSlide(index) {
+    displays.forEach((d, i) => {
+      d.classList.remove("show", "exit");
+      dots[i].classList.remove("active");
+      if (i === index) {
+        d.classList.add("show");
+        dots[i].classList.add("active");
+      } else {
+        d.classList.add("exit");
+      }
+    });
+    current = index;
+  }
+
+  // Next & Previous
+  function nextSlide() {
+    let newIndex = (current + 1) % displays.length;
+    showSlide(newIndex);
+  }
+
+  function prevSlide() {
+    let newIndex = (current - 1 + displays.length) % displays.length;
+    showSlide(newIndex);
+  }
+
+  // Reset autoplay timer
+  function resetInterval() {
+    clearInterval(slideInterval);
+    slideInterval = setInterval(nextSlide, 5000);
+  }
+
+  // Event listeners
+  nextBtn.addEventListener("click", () => {
+    nextSlide();
+    resetInterval();
+  });
+
+  prevBtn.addEventListener("click", () => {
+    prevSlide();
+    resetInterval();
+  });
+
+  // Init first slide
+  showSlide(current);
+  slideInterval = setInterval(nextSlide, 5000);
+});
+
+  </script>
+
+
 
   
   <script src="./script/script.js"></script>

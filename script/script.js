@@ -1,4 +1,4 @@
-alert("Welcome here");
+
 
 
 const menuToggle = document.querySelector(".menu-toggle");
@@ -12,7 +12,7 @@ const menuToggle = document.querySelector(".menu-toggle");
 
     window.addEventListener("load", () => {
   document.getElementById("preloader").style.display = "none";
-});
+   });
 
 document.querySelectorAll("a").forEach(link => {
   link.addEventListener("click", e => {
@@ -47,4 +47,34 @@ backToTop.addEventListener("click", () => {
   });
 });
 
+// script.js
+const reveals = document.querySelectorAll('.reveal');
 
+window.addEventListener('scroll', () => {
+  reveals.forEach(el => {
+    const windowHeight = window.innerHeight;
+    const revealTop = el.getBoundingClientRect().top;
+    if (revealTop < windowHeight - 100) {
+      el.classList.add('active');
+    }
+  });
+});
+
+
+
+function revealOnScroll() {
+  const triggerBottom = window.innerHeight * 0.85; // trigger point
+
+  reveals.forEach(el => {
+    const boxTop = el.getBoundingClientRect().top;
+
+    if (boxTop < triggerBottom) {
+      el.classList.add('active');
+    } else {
+      el.classList.remove('active'); // remove if you want repeat animation
+    }
+  });
+}
+
+window.addEventListener('scroll', revealOnScroll);
+revealOnScroll(); // run on page load
